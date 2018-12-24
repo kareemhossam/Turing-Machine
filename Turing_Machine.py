@@ -1,5 +1,5 @@
-#Python code for Turing machine Simulation
-class Transistion:
+# Python code for Turing machine Simulation
+class Transition:
     def __init__(self, state, character, newState, newCharacter, action):
         self.state = state
         self.character = character
@@ -21,13 +21,12 @@ def main():
         if (len(temp) != 5):
             print("Invalid Input!!!")
             exit(1)
-        transition_fn = Transistion(
+        transition_fn = Transition(
             temp[0], temp[1], temp[2], temp[3], temp[4])
         transition_fns.append(transition_fn)
     loop = True
     # Main Loop:
     while (loop):
-        rounds = 0
         tape = input("Enter input tape")
         head_pos = int(input("Enter head Position"))
 
@@ -36,7 +35,6 @@ def main():
         current_state = 0
 
         while (not tr_fn_found):
-            rounds += 1
             for i in transition_fns:
                 if (head_pos >= len(tape)):
                     print("Index out of Bound!!!")
@@ -45,6 +43,7 @@ def main():
                     continue
                 else:
                     current_state = i.newState
+                    tape[head_pos] = i.newCharacter
                     if (i.action == "R"):
                         head_pos += 1
                     elif (i.action == "L"):
@@ -55,9 +54,9 @@ def main():
                         complete = False
 
         if (complete != False):
-            print("YY")
+            print("Accepted")
         else:
-            print("NN")
+            print("Rejected")
         question = input("Try again [y/N]")
         if (question != 'y' or question != 'Y'):
             loop = False
